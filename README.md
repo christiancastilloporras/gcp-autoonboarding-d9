@@ -25,9 +25,9 @@ To run this script, you will need the following:-
     - Dome9 **API key**
     - Dome9 **API secret**
     
-4) Run **git clone https://github.com/chrisbeckett/gcpd9-autoonboarding.git**
+4) Run **git clone https://github.com/christiancastilloporras/gcp-autoonboarding-d9.git**
 
-5) Run **python -m venv gcpd9-autoonboarding**
+5) Run **python -m venv gcp-autoonboarding-d9**
 
 6) Run **scripts\activate.bat** to enable the Python virtual environment
 
