@@ -6,6 +6,7 @@
 
 # Import required libraries
 from google.cloud import resource_manager
+import time
 import os
 import requests
 from requests.auth import HTTPBasicAuth
@@ -121,6 +122,7 @@ def add_projects():
 			else:
 				print(Fore.RED + 'Unknown error onboarding subscription to Dome9:',project_d[project],'Status Code:', r.status_code)
 				print(r.content,"\n")
+			time.sleep(1)
 	except:
 		print(Fore.RED + "Unknown error, soz!")
 	print("\n")
