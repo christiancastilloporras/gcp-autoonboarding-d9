@@ -66,7 +66,8 @@ def compare_projects_to_add():
 	r = requests.get(d9_api + '/v2/GoogleCloudAccount', headers=headers, auth=(d9_api_key, d9_api_secret))
 	data = r.json()
 	for i in gcp_client.list_projects():
-		projects.append(i.project_id)
+		if i.status == 'ACTIVE':
+			projects.append(i.project_id)
 		project_d[i.project_id]=i.name
 	for n in data:
 		projects_d9.append(n['projectId'])
@@ -74,20 +75,20 @@ def compare_projects_to_add():
 	return main_list
 
 def compare_projects_to_del():
-        projects = []
-        projects_d9 = []
-        r = requests.get(d9_api + '/v2/GoogleCloudAccount', headers=headers, auth=(d9_api_key, d9_api_secret))
-        data = r.json()
-        for i in gcp_client.list_projects():
-                projects.append(i.project_id)
-                project_d[i.project_id]=i.name
-        for n in data:
-                projects_d9.append(n['projectId'])
-        main_list = np.setdiff1d(projects_d9,projects)
-        return main_list
+	projects = []
+	projects_d9 = []
+	r = requests.get(d9_api + '/v2/GoogleCloudAccount', headers=headers, auth=(d9_api_key, d9_api_secret))
+	data = r.json()
+	for i in gcp_client.list_projects():
+		projects.append(i.project_id)
+		project_d[i.project_id]=i.name
+	for n in data:
+		projects_d9.append(n['projectId'])
+	main_list = np.setdiff1d(projects_d9,projects)
+	return main_list
 
-for i in gcp_client.list_projects():
-	print(i.project_id, i.status)
+#for i in gcp_client.list_projects():
+#	print(i.project_id, i.status)
 
 def add_projects():
 	try:
