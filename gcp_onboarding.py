@@ -87,7 +87,6 @@ def compare_projects_to_del():
 	for n in data:
 		projects_d9.append(n['projectId'])
 		onboarded_p[n['projectId']]=n['id']
-#	print(onboarded_p)
 	main_list = np.setdiff1d(projects_d9,projects)
 	return main_list
 
@@ -175,4 +174,4 @@ def del_projects():
 	print(Fore.WHITE + "===================================================================================================================","\n")
 
 
-del_projects()
+add_projects()
