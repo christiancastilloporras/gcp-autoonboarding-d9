@@ -1,5 +1,4 @@
 # This script logs into GCP and iterates through subscriptions to onboard them into Dome9
-# Feedback to chrisbe@checkpoint.com or open an issue on https://github.com/chrisbeckett/gcpd9-autoonboarding/issues
 
 # To run the script, you will need to set environment variable for GOOGLE_APPLICATION_CREDENTIALS to the file path of the Service Account JSON file
 
