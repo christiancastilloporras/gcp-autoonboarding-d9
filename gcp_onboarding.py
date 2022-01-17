@@ -59,6 +59,7 @@ headers = {
 
 # Create ID + Name global dict
 project_d = {}
+onboarded_p = {}
 
 def compare_projects_to_add():
 	projects = []
@@ -80,10 +81,13 @@ def compare_projects_to_del():
 	r = requests.get(d9_api + '/v2/GoogleCloudAccount', headers=headers, auth=(d9_api_key, d9_api_secret))
 	data = r.json()
 	for i in gcp_client.list_projects():
-		projects.append(i.project_id)
+		if i.status == 'ACTIVE':
+			projects.append(i.project_id)
 		project_d[i.project_id]=i.name
 	for n in data:
 		projects_d9.append(n['projectId'])
+		onboarded_p[n['projectId']]=n['id']
+#	print(onboarded_p)
 	main_list = np.setdiff1d(projects_d9,projects)
 	return main_list
 
@@ -140,8 +144,8 @@ def del_projects():
                 print(Fore.WHITE + "===================================================================================================================","\n")
                 for project in compare_projects_to_del():
                         print(Fore.WHITE + "===================================================================================================================")
-                        print(Fore.WHITE + "Project to delete: ",project, "with name:", project_d[project])
-                        r = requests.delete(d9_api + '/v2/GoogleCloudAccount/' + project, headers=headers, auth=(d9_api_key, d9_api_secret))
+                        print(Fore.WHITE + "Project to delete: ",project, "with ID:", onboarded_p[project])
+                        r = requests.delete(d9_api + '/v2/GoogleCloudAccount/' + onboarded_p[project], headers=headers, auth=(d9_api_key, d9_api_secret))
                         if r.status_code == 204:
                                 print(Fore.GREEN + 'Project successfully deleted in Dome9:', project_d[project])
                                 print(Fore.WHITE + "===================================================================================================================","\n")
@@ -162,6 +166,7 @@ def del_projects():
                                 print(r.content,"\n")
 	except:
 		print(Fore.RED + "Unknown error, soz!")
+		print(r.status_code)
 	print("\n")
 	print(Fore.WHITE + "===================================================================================================================")
 	print(Fore.WHITE + "                                           RUN COMPLETE - SUMMARY RESULTS")
@@ -170,4 +175,4 @@ def del_projects():
 	print(Fore.WHITE + "===================================================================================================================","\n")
 
 
-add_projects()
+del_projects()
